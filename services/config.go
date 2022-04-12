@@ -23,6 +23,7 @@ func (c *Config) Load() {
 	timescaledb["DATABASE"] 	= c.Ifelse(os.Getenv("TIMESCALEDATABASE"),"","",os.Getenv("TIMESCALEDATABASE"))
 	timescaledb["PORT"] 		= c.Ifelse(os.Getenv("TIMESCALEPORT"),"","",os.Getenv("TIMESCALEPORT"))
 
+	c.Configuration["TIMESCALE"] = timescaledb
 
 }
 
