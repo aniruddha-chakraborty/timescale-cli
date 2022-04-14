@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/aniruddha-chakraborty/timescale-cli/container"
 	"github.com/aniruddha-chakraborty/timescale-cli/providers"
@@ -8,24 +9,33 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
-	"runtime"
 )
 
 func main() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
 	dir, _ := os.Getwd()
 	envdirectory := fmt.Sprintf("%s/.env",dir)
 	err := godotenv.Load(envdirectory)
 	if err != nil {
 		log.Fatal(err)
 	}
-	containers := &container.Container{
+	containers := &container.Container {
 		Services: make(map[string]interface{}),
 	}
 
 	configprovider 			:= &providers.ConfigProvider{}
-	configprovider.Register(containers)
+	queueprovider 			:= &providers.QueueProvider{}
+	csvprovider 			:= &providers.CsvProvider{}
 
-	configs	:= containers.Get("config").(*services.Config)
-	println(configs.Get("TIMESCALE","HOST"))
+	configprovider.Register(containers)
+	queueprovider.Register(containers)
+	csvprovider.Register(containers)
+
+	//configs	:= containers.Get("config").(*services.Config)
+	filePtr := flag.String("file", "foo", "a string")
+	flag.Parse()
+	//fmt.Println("word:", *filePtr)
+
+	csv := containers.Get("csv").(*services.CsvHandler)
+	csv.Read(*filePtr)
+	//println(configs.Get("TIMESCALE","HOST"))
 }
