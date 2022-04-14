@@ -25,6 +25,7 @@ func main() {
 	configprovider 			:= &providers.ConfigProvider{}
 	dbprovider				:= &providers.DatabaseProvider{}
 	repositoriesProvider 	:= &providers.RepositoryProvider{}
+	outputprovider 			:= &providers.OutputProvider{}
 	calculatorprovider 		:= &providers.Calculator{}
 	queueprovider 			:= &providers.QueueProvider{}
 	csvprovider 			:= &providers.CsvProvider{}
@@ -32,6 +33,7 @@ func main() {
 	configprovider.Register(containers)
 	dbprovider.Register(containers)
 	repositoriesProvider.Register(containers)
+	outputprovider.Register(containers)
 	calculatorprovider.Register(containers)
 	queueprovider.Register(containers)
 	csvprovider.Register(containers)
