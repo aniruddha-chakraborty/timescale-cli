@@ -23,19 +23,22 @@ func main() {
 	}
 
 	configprovider 			:= &providers.ConfigProvider{}
+	dbprovider				:= &providers.DatabaseProvider{}
+	repositoriesProvider 	:= &providers.RepositoryProvider{}
+	calculatorprovider 		:= &providers.Calculator{}
 	queueprovider 			:= &providers.QueueProvider{}
 	csvprovider 			:= &providers.CsvProvider{}
 
 	configprovider.Register(containers)
+	dbprovider.Register(containers)
+	repositoriesProvider.Register(containers)
+	calculatorprovider.Register(containers)
 	queueprovider.Register(containers)
 	csvprovider.Register(containers)
 
-	//configs	:= containers.Get("config").(*services.Config)
 	filePtr := flag.String("file", "foo", "a string")
 	flag.Parse()
-	//fmt.Println("word:", *filePtr)
 
 	csv := containers.Get("csv").(*services.CsvHandler)
 	csv.Read(*filePtr)
-	//println(configs.Get("TIMESCALE","HOST"))
 }

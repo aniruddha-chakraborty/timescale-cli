@@ -4,10 +4,12 @@ import (
 	"github.com/aniruddha-chakraborty/timescale-cli/interfaces"
 	fifo "github.com/foize/go.fifo"
 	"sync"
+	"time"
 )
 
 type Queue struct {
 	queueStorage *fifo.Queue
+	Calculator *Calculator
 }
 
 func (q *Queue) Init() {
@@ -19,13 +21,18 @@ func ( q *Queue ) Start(input string) {
 	for q.queueStorage.Len() > 0 {
 		wg.Add(1)
 		data := q.queueStorage.Next().(*interfaces.CsvStructure)
-		go q.exec(data,wg)
+		go q.exec(data,wg,q.Calculator)
 	}
 	wg.Wait()
 }
 
-func (q *Queue) exec(data *interfaces.CsvStructure, wg sync.WaitGroup) {
-
+func (q *Queue) exec(data *interfaces.CsvStructure, wg sync.WaitGroup, calculator *Calculator) {
+	start := time.Now()
+	time.Sleep(1 * time.Second)
+	end   := time.Now()
+	d := end.UnixNano() - start.UnixNano()
+	calculator.Calculate(d)
+	defer wg.Done()
 }
 
 func (q *Queue) Insert(data *interfaces.CsvStructure) {

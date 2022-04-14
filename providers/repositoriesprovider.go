@@ -19,6 +19,6 @@ func (r *RepositoryProvider) Register(global_container *container.Container) {
 	sites := global_container.Get("dbprovider").(*services.Database)
 	postgresConnection := sites.PostgresConnection()
 
-	repository_container.Set("websites",&repositories.ActiveUrl{ Connection: postgresConnection})
+	repository_container.Set("cpu_usage",&repositories.CpuUsage{ Connection: postgresConnection})
 	global_container.Set("repositories",repository_container)
 }

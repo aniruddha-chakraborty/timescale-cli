@@ -6,9 +6,12 @@ import (
 )
 
 type QueueProvider struct {
-	
+
 }
 
 func (queue *QueueProvider) Register(container *container.Container) {
-	container.Set("queue", &services.Queue{})
+	calculator := container.Get("calculator").(*services.Calculator)
+	container.Set("queue", &services.Queue{
+		Calculator: calculator,
+	})
 }
