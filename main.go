@@ -25,6 +25,7 @@ func main() {
 	}
 
 	configprovider 			:= &providers.ConfigProvider{}
+	waitgroupProvider 		:= &providers.WaitGroupProvider{}
 	eventbusprovider 		:= &providers.EventsProvider{}
 	workersprovider 		:= &providers.WorkerProvider{}
 	dbprovider				:= &providers.DatabaseProvider{}
@@ -34,6 +35,7 @@ func main() {
 	csvprovider 			:= &providers.CsvProvider{}
 
 	configprovider.Register(containers)
+	waitgroupProvider.Register(containers)
 	outputprovider.Register(containers)
 	//output := containers.Get("output").(*services.Output)
 	//output.Init()
