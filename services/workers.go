@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/aniruddha-chakraborty/timescale-cli/database/repositories"
 	"github.com/aniruddha-chakraborty/timescale-cli/interfaces"
 	"time"
 )
@@ -9,6 +10,7 @@ type Workers struct {
 	EventListener *EventBus
 	Calculator *Calculator
 	WaitGroup *GlobalWaitGroup
+	CpuUsage *repositories.CpuUsage
 }
 
 func (w *Workers) Listen() {
@@ -25,9 +27,8 @@ func (w *Workers) Listen() {
 
 func ( w *Workers ) exec(data *interfaces.CsvStructure) {
 	start := time.Now()
-	time.Sleep(1 * time.Microsecond)
+	w.CpuUsage.GetSelected(data.StartTime,data.EndTime,data.Hostname)
 	end   := time.Now()
-
 
 	d := float64(end.UnixNano() - start.UnixNano())
 	w.Calculator.Calculate(d)

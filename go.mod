@@ -11,4 +11,5 @@ require (
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
+	gorm.io/driver/postgres v1.3.4 // indirect
 )

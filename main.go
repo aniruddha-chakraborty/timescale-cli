@@ -41,9 +41,11 @@ func main() {
 	//output.Init()
 	calculatorprovider.Register(containers)
 	eventbusprovider.Register(containers)
-	workersprovider.Register(containers)
 	dbprovider.Register(containers)
+	database := containers.Get("dbprovider").(*services.Database)
+	database.PostgresConnect()
 	repositoriesProvider.Register(containers)
+	workersprovider.Register(containers)
 	csvprovider.Register(containers)
 
 
