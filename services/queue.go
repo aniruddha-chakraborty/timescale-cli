@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"github.com/aniruddha-chakraborty/timescale-cli/interfaces"
 	fifo "github.com/foize/go.fifo"
 	"sync"
@@ -21,6 +22,7 @@ func ( q *Queue ) Start() {
 	startTime := time.Now()
 	totalInQueue := int64(q.queueStorage.Len())
 	for q.queueStorage.Len() > 0 {
+		fmt.Println("hello")
 		wg.Add(1)
 		data := q.queueStorage.Next().(*interfaces.CsvStructure)
 		go q.exec(data,wg,q.Calculator,startTime,totalInQueue)
@@ -32,11 +34,15 @@ func (q *Queue) exec(data *interfaces.CsvStructure, wg sync.WaitGroup, calculato
 	start := time.Now()
 	time.Sleep(1 * time.Second)
 	end   := time.Now()
-	d := end.UnixNano() - start.UnixNano()
+	d := float64(end.UnixNano() - start.UnixNano())
 	calculator.Calculate(d,startTime,totalInQueue)
 	defer wg.Done()
 }
 
-func (q *Queue) Insert(data *interfaces.CsvStructure) {
+func (q *Queue) Instance() *fifo.Queue {
+	return q.queueStorage
+}
+
+func (q *Queue) Insert(data *interfaces.QueueData) {
 	q.queueStorage.Add(data)
 }

@@ -6,9 +6,13 @@ import (
 )
 
 type Output struct {
-
+	writer *goterminal.Writer
 }
 
-func (c *Output) Writer() *goterminal.Writer {
-	return goterminal.New(&bytes.Buffer{})
+func (o *Output) Init() {
+	o.writer = goterminal.New(&bytes.Buffer{})
+}
+
+func (o *Output) Writer() *goterminal.Writer {
+	return o.writer
 }

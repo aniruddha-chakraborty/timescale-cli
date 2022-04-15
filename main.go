@@ -40,7 +40,8 @@ func main() {
 
 	filePtr := flag.String("file", "foo", "a string")
 	flag.Parse()
-
+	output := containers.Get("output").(*services.Output)
+	output.Init()
 	csv := containers.Get("csv").(*services.CsvHandler)
 	csv.Read(*filePtr)
 }
