@@ -1,18 +1,18 @@
 package services
 
 import (
-	"bytes"
-	"github.com/apoorvam/goterminal"
+	"github.com/gosuri/uilive"
 )
 
 type Output struct {
-	writer *goterminal.Writer
+	writer *uilive.Writer
 }
 
 func (o *Output) Init() {
-	o.writer = goterminal.New(&bytes.Buffer{})
+	o.writer = uilive.New()
+	o.writer.Start()
 }
 
-func (o *Output) Writer() *goterminal.Writer {
+func (o *Output) Writer() *uilive.Writer {
 	return o.writer
 }

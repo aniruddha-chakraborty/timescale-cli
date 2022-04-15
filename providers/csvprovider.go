@@ -10,8 +10,8 @@ type CsvProvider struct {
 }
 
 func (csv *CsvProvider) Register(container *container.Container) {
-	queue := container.Get("queue").(*services.Queue)
+	eventbus := container.Get("eventbus").(*services.EventBus)
 	container.Set("csv", &services.CsvHandler{
-		Queue: queue,
+		EventBus : eventbus,
 	})
 }

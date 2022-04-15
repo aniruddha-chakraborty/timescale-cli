@@ -1,14 +1,13 @@
 package services
 
 import (
-	"fmt"
 	"github.com/aniruddha-chakraborty/timescale-cli/interfaces"
 	"github.com/gocarina/gocsv"
 	"os"
 )
 
 type CsvHandler struct {
-	Queue *Queue
+	EventBus *EventBus
 }
 
 func (c *CsvHandler) Read(filename string) []*interfaces.CsvStructure {
@@ -24,13 +23,8 @@ func (c *CsvHandler) Read(filename string) []*interfaces.CsvStructure {
 	}
 
 	for _, client := range clients {
-		println(client.Hostname)
-		//c.Queue.Insert(&interfaces.QueueData{
-		//	Host: client.Hostname,
-		//	StartTime: client.StartTime,
-		//	EndTime: client.EndTime,
-		//})
+		//println(client.Hostname)
+		c.EventBus.Emit(1,client)
 	}
-	fmt.Println("test")
 	return clients
 }

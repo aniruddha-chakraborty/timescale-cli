@@ -5,13 +5,16 @@ import (
 	"github.com/aniruddha-chakraborty/timescale-cli/services"
 )
 
-type QueueProvider struct {
+type WorkerProvider struct {
 
 }
 
-func (queue *QueueProvider) Register(container *container.Container) {
+func (queue *WorkerProvider) Register(container *container.Container) {
 	calculator := container.Get("calculator").(*services.Calculator)
-	container.Set("queue", &services.Queue{
+	eventListener := container.Get("eventbus").(*services.EventBus)
+
+	container.Set("workers", &services.Workers{
 		Calculator: calculator,
+		EventListener: eventListener,
 	})
 }

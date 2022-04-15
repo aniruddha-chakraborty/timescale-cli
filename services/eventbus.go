@@ -2,36 +2,22 @@ package services
 
 import "github.com/aniruddha-chakraborty/timescale-cli/interfaces"
 
-type Events struct {
-	Listeners map[string][]chan []interfaces.CsvStructure
+type convert func(structure *interfaces.CsvStructure)
+
+type EventBus struct {
+	Listeners map[int][]func(structure *interfaces.CsvStructure)
 }
 
-func (e *Events) AddListener(event string, channel chan []interfaces.CsvStructure ) {
+func (e *EventBus) AddListener(event int , fn convert ) {
 	if _,ok := e.Listeners[event]; ok {
-		e.Listeners[event] = append(e.Listeners[event],channel)
+		e.Listeners[event] = append(e.Listeners[event],fn)
 	} else {
-		e.Listeners[event] = []chan []interfaces.CsvStructure{channel}
+		e.Listeners[event] = []func(structure *interfaces.CsvStructure){fn}
 	}
 }
 
-func (e *Events) RemoveListener(event string, channel chan []interfaces.CsvStructure) {
-	if _,ok := e.Listeners[event]; ok {
-		for i := range e.Listeners[event] {
-			if e.Listeners[event][i] == channel {
-				e.Listeners[event][i] = e.Listeners[event][len(e.Listeners[event])-1]
-				e.Listeners[event] =  e.Listeners[event][:len(e.Listeners[event])-1]
-			}
-		}
-	}
-}
-
-func (e *Events) Emit(event string,data []interfaces.CsvStructure) {
-	if _, ok := e.Listeners[event]; ok {
-		for _, handler := range e.Listeners[event] {
-			//handler <- data
-			go func(handler chan []interfaces.CsvStructure) {
-				handler <- data
-			}(handler)
-		}
+func (e *EventBus) Emit(event int,data *interfaces.CsvStructure) {
+	for _,fn := range e.Listeners[event] {
+		fn(data)
 	}
 }
