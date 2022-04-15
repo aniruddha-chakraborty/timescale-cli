@@ -1,16 +1,19 @@
 package services
 
 import (
+	"fmt"
 	"github.com/aniruddha-chakraborty/timescale-cli/interfaces"
 	"github.com/gocarina/gocsv"
 	"os"
+	"strconv"
 )
 
 type CsvHandler struct {
 	EventBus *EventBus
+	Calculator *Calculator
 }
 
-func (c *CsvHandler) Read(filename string) []*interfaces.CsvStructure {
+func (c *CsvHandler) Read(filename string) {
 	clientsFile, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, os.ModePerm)
 	if err != nil {
 		panic(err)
@@ -23,8 +26,14 @@ func (c *CsvHandler) Read(filename string) []*interfaces.CsvStructure {
 	}
 
 	for _, client := range clients {
-		//println(client.Hostname)
-		c.EventBus.Emit(1,client)
+		hostId := client.Hostname[5:len(client.Hostname)]
+		n, err := strconv.ParseInt(hostId, 10, 64)
+		if err != nil {
+			fmt.Printf("%d of type %T", n, n)
+		}
+		//fmt.Println(hostId)
+		c.EventBus.Emit(int(n),client)
 	}
-	return clients
+
+	c.Calculator.PrintResult()
 }

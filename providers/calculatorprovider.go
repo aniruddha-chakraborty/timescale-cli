@@ -10,8 +10,5 @@ type Calculator struct {
 }
 
 func (calc *Calculator) Register(container *container.Container) {
-	output := container.Get("output").(*services.Output)
-	container.Set("calculator", &services.Calculator{
-		Output: output,
-	})
+	container.Set("calculator", &services.Calculator{})
 }

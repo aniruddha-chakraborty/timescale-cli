@@ -9,8 +9,7 @@ type Output struct {
 }
 
 func (o *Output) Init() {
-	o.writer = uilive.New()
-	o.writer.Start()
+
 }
 
 func (o *Output) Writer() *uilive.Writer {
