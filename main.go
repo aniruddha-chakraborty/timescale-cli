@@ -20,7 +20,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	containers := &container.Container {
+	containers := &container.Container{
 		Services: make(map[string]interface{}),
 	}
 
@@ -30,15 +30,11 @@ func main() {
 	workersprovider 		:= &providers.WorkerProvider{}
 	dbprovider				:= &providers.DatabaseProvider{}
 	repositoriesProvider 	:= &providers.RepositoryProvider{}
-	outputprovider 			:= &providers.OutputProvider{}
 	calculatorprovider 		:= &providers.Calculator{}
 	csvprovider 			:= &providers.CsvProvider{}
 
 	configprovider.Register(containers)
 	waitgroupProvider.Register(containers)
-	outputprovider.Register(containers)
-	//output := containers.Get("output").(*services.Output)
-	//output.Init()
 	calculatorprovider.Register(containers)
 	eventbusprovider.Register(containers)
 	dbprovider.Register(containers)

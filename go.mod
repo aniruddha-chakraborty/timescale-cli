@@ -8,7 +8,7 @@ require (
 	github.com/gocarina/gocsv v0.0.0-20220310154401-d4df709ca055
 	github.com/gosuri/uilive v0.0.4
 	github.com/jinzhu/gorm v1.9.16
-	github.com/joho/godotenv v1.4.0 // indirect
+	github.com/joho/godotenv v1.4.0
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
 	gorm.io/driver/postgres v1.3.4 // indirect

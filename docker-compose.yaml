@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  database:
+    image: anichakraborty/timescale-migrated:latest
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=homework
+    ports:
+      - 5432:5432
+    volumes:
+    - /var/lib/postgres/data:/var/lib/postgresql/data
+  timescale_cli:
+    image: anichakraborty/timescaledb-cli
+    depends_on:
+      - "database"

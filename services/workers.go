@@ -14,15 +14,13 @@ type Workers struct {
 }
 
 func (w *Workers) Listen() {
-	w.EventListener.AddListener(0,func(structure *interfaces.CsvStructure) {
-		w.WaitGroup.Instance().Add(1)
-		go w.exec(structure)
-	})
-
-	w.EventListener.AddListener(1,func(structure *interfaces.CsvStructure) {
-		w.WaitGroup.Instance().Add(1)
-		go w.exec(structure)
-	})
+	totalWorkers := 2
+	for i := 0; i < totalWorkers; i++ {
+		w.EventListener.AddListener(i,func(structure *interfaces.CsvStructure) {
+			w.WaitGroup.Instance().Add(1)
+			go w.exec(structure)
+		})
+	}
 }
 
 func ( w *Workers ) exec(data *interfaces.CsvStructure) {

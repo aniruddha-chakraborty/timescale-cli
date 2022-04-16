@@ -34,7 +34,7 @@ func (c *Calculator) Calculate(queryTime float64) {
 }
 
 func (c *Calculator) PrintResult() {
-	fmt.Println("total Query Processed ",c.queriesProcessed," Seconds")
+	fmt.Println("total Query Processed ",c.queriesProcessed)
 	fmt.Println("Total processing time", c.totalProcessing/1000000000," Seconds")
 	fmt.Println("Minimum Query time ",c.minQueryTime/1000000000," Seconds")
 	fmt.Println("Maximum Query Time ",c.maxQueryTime/1000000000," Seconds")
