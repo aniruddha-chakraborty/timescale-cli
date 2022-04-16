@@ -11,6 +11,7 @@ import (
 	"os"
 )
 
+
 func main() {
 
 	dir, _ := os.Getwd()
@@ -52,4 +53,5 @@ func main() {
 	flag.Parse()
 	csv := containers.Get("csv").(*services.CsvHandler)
 	csv.Read(*filePtr)
+
 }

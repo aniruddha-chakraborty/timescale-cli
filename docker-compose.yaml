@@ -2,16 +2,18 @@ version: '3'
 
 services:
   database:
-    image: anichakraborty/timescale-migrated:latest
+    image: timescale/timescaledb:latest-pg14
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=homework
     ports:
-      - 5432:5432
+      - 5435:5432
     volumes:
-    - /var/lib/postgres/data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
   timescale_cli:
-    image: anichakraborty/timescaledb-cli
+    build: ./
     depends_on:
       - "database"
+    links:
+      - "database"
+    restart: always

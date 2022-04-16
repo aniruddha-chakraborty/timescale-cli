@@ -20,7 +20,7 @@ func (DB *Database) PostgresConnect() {
 	//	DB.Config.Get("TIMESCALE","DATABASE"),
 	//	DB.Config.Get("TIMESCALE","PORT")))
 
-	db, err := gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=homework password=password sslmode=disable")
+	db, err := gorm.Open("postgres", "host=database port=5435 user=postgres dbname=homework password=password sslmode=disable")
 	db.DB().SetMaxOpenConns(10)
 	db.DB().SetMaxIdleConns(2)
 	db.DB().SetConnMaxLifetime(time.Nanosecond)
