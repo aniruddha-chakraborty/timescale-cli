@@ -13,14 +13,7 @@ type Database struct {
 
 func (DB *Database) PostgresConnect() {
 
-	//db, err := gorm.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s",
-	//	DB.Config.Get("TIMESCALE","HOST"),
-	//	DB.Config.Get("TIMESCALE","USER"),
-	//	DB.Config.Get("TIMESCALE","PASSWORD"),
-	//	DB.Config.Get("TIMESCALE","DATABASE"),
-	//	DB.Config.Get("TIMESCALE","PORT")))
-
-	db, err := gorm.Open("postgres", "host=database port=5435 user=postgres dbname=homework password=password sslmode=disable")
+	db, err := gorm.Open("postgres", "host=0.0.0.0 port=5435 user=postgres dbname=homework password=password sslmode=disable")
 	db.DB().SetMaxOpenConns(10)
 	db.DB().SetMaxIdleConns(2)
 	db.DB().SetConnMaxLifetime(time.Nanosecond)
